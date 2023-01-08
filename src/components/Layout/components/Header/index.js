@@ -1,32 +1,28 @@
-import { useEffect, useState } from 'react';
-import classNames from 'classnames/bind';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faCircleQuestion,
-    faCircleXmark,
+    faCoins,
     faEarthAsia,
     faEllipsisVertical,
-    faKeyboard,
-    faMagnifyingGlass,
-    faSpinner,
-    faUser,
-    faCoins,
-    faVideo,
     faGear,
+    faKeyboard,
     faSignOut,
+    faUser,
+    faVideo,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tippy from '@tippyjs/react';
+import classNames from 'classnames/bind';
+import { Link } from 'react-router-dom';
 import 'tippy.js/dist/tippy.css'; // optional
-import HeadlessTippy from '@tippyjs/react/headless';
 
-import Button from '~/components/Button';
-import { Wrapper as PopperWrapper } from '~/components/Popper';
-import styles from './Header.module.scss';
 import images from '~/assets/images';
-import AccountItem from '~/components/AccountItem';
-import Menu from '~/components/Popper/Menu';
+import Button from '~/components/Button';
 import { InboxIcon, MessageIcon, UploadIcon } from '~/components/Icons';
 import Image from '~/components/Image';
+import Menu from '~/components/Popper/Menu';
+import routesConfig from '~/config/routes';
+import Search from '../Search';
+import styles from './Header.module.scss';
 
 const cx = classNames.bind(styles);
 const MENU_ITEMS = [
@@ -60,15 +56,7 @@ const MENU_ITEMS = [
     },
 ];
 function Header() {
-    const [searchReult, setSearchResult] = useState([]);
-
     const currentUser = true;
-
-    useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([]);
-        }, 0);
-    }, []);
     // Handle logic
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
@@ -111,35 +99,10 @@ function Header() {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <img src={images.logo} alt="Tiktok" />
-                <HeadlessTippy
-                    interactive
-                    visible={searchReult.length > 0}
-                    render={(attrs) => (
-                        <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                            <PopperWrapper>
-                                <h4 className={cx('search-title')}>Accounts</h4>
-                                <AccountItem />
-                                <AccountItem />
-                                <AccountItem />
-                                <AccountItem />
-                            </PopperWrapper>
-                        </div>
-                    )}
-                >
-                    <div className={cx('search')}>
-                        <input placeholder="Search accounts and videos" spellCheck={false} />
-                        <button className={cx('clear')}>
-                            <FontAwesomeIcon icon={faCircleXmark} />
-                        </button>
-                        <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
-
-                        <button className={cx('search-btn')}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        </button>
-                    </div>
-                </HeadlessTippy>
-
+                <Link to={routesConfig.home} className={cx('logo-link')}>
+                    <img src={images.logo} alt="Tiktok" />
+                </Link>
+                <Search />
                 <div className={cx('actions')}>
                     {currentUser ? (
                         <>
@@ -170,7 +133,7 @@ function Header() {
                         {currentUser ? (
                             <Image
                                 className={cx('user-avatar')}
-                                src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/bab1205e21211c71fe93c4315bc940ab~c5_100x100.jpeg?x-expires=1672999200&x-signature=VQWglkyGMkQFxRw2jt1RllZFNPM%3D"
+                                src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/bab1205e21211c71fe93c4315bc940ab~c5_100x100.jpeg?x-expires=1673229600&x-signature=%2FWMxDiIINpJGHRdFybsnoWxcNS0%3D"
                                 alt="Nguyen Van A"
                                 fallback="https://scontent.fhan14-1.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?stp=cp0_dst-png_p56x56&_nc_cat=1&ccb=1-7&_nc_sid=7206a8&_nc_ohc=1KtVem5YfB0AX-s7C4M&_nc_ht=scontent.fhan14-1.fna&oh=00_AfAtRgxvxxc0YGQSyGv6DOBjQ95zxQvlr2lXTq21VKXwew&oe=63DDC938"
                             />
