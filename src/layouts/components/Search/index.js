@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HeadlessTippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 
-import * as searchServices from '~/apiServices/searchServices';
+import * as searchServices from '~/services/searchService';
 import AccountItem from '~/components/AccountItem';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { useDebounce } from '~/hooks';
@@ -46,7 +46,9 @@ function Search() {
         setShowResult(false);
     };
     return (
-        <>
+        //Using a wrapper <div> tag around the reference element solves
+        //this by creating a new parentNode context.
+        <div>
             <HeadlessTippy
                 interactive
                 visible={showResult && searchReult.length > 0}
@@ -87,7 +89,7 @@ function Search() {
                     </button>
                 </div>
             </HeadlessTippy>
-        </>
+        </div>
     );
 }
 
